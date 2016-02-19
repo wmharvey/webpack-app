@@ -1,14 +1,32 @@
-h1 {
-  text-align: center;
-  color: blue;
-}
-
-h3 {
+h1, h3 {
   text-align: center;
 }
 
-.city {
-  text-align: center;
-  margin: 20px 0;
-  color: purple;
+* {
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+.clear-floats {
+  clear: both;
+  padding: 15px;
+}
+
+.season-thumbnail {
+  height: 400px !important;
+}
+
+.grid-sizer {
+  display: none !important;
+}
+
+.grid:after {
+  content: '' !important;
+  display: block !important;
+  clear: both !important;
+}
+
+.heart {
+  color: red !important;
 }

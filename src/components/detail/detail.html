@@ -1,0 +1,52 @@
+<h3 class="overview">{{capsule.season}}</h3>
+
+<div class="container-fluid">
+  <div class="grid">
+    <div class="grid-sizer col-xs-12 col-sm-4 col-md-3"></div>
+    <div class="grid-item col-xs-12 col-sm-4 col-md-3" ng-repeat="item in items">
+        <div class="thumbnail">
+          <a ng-href="{{item.url}}"><img ng-src="{{item.image}}" alt="Missing image"></a>
+          <div class="caption">
+            <a ng-href="{{item.url}}"><h3>{{item.description}}</h3></a>
+            <div class="insert">Hearts: {{item.importance}}</div>
+            <button ng-click="edit(item)" class="btn btn-default">Edit</button>
+            <button ng-click="delete(item, $index)" class="btn btn-danger">Delete</button>
+          </div>
+        </div>
+    </div>
+  </div>
+</div>
+
+<div class="clear-floats">
+  <form>
+    <div class="form-group">
+      <label>URL</label>
+      <input type="text" class="form-control" ng-model="new.url" placeholder="www.site.com">
+    </div>
+    <div class="form-group">
+      <label>Image URL</label>
+      <input type="text" class="form-control" ng-model="new.image" placeholder="www.image.jpg">
+    </div>
+    <div class="form-group">
+      <label>Description</label>
+      <input type="text" class="form-control" ng-model="new.description" placeholder="Description">
+    </div>
+    <div class="form-group">
+      <label>Category</label>
+      <select ng-model="new.type">
+        <option value="tops">Tops</option>
+        <option value="bottoms">Bottoms</option>
+        <option value="shoes">Shoes</option>
+        <option value="accessories">Accessories</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Hearts</label>
+      <input id="heart-rating" class="rating" type="hidden" data-filled="glyphicon glyphicon-heart heart" data-empty="glyphicon glyphicon-heart-empty heart">
+    </div>
+    <button ng-click="addItem(new)" class="btn btn-default">Submit</button>
+    <button ng-click="reset()" class="btn btn-default">Cancel</button>
+  </form>
+</div>
+<!-- <div><input id="item-rating" class="rating" type="hidden" data-filled="glyphicon glyphicon-heart heart" data-empty="glyphicon glyphicon-heart-empty heart" data-readonly value="3" /></div> -->
+

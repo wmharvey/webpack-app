@@ -1,0 +1,11 @@
+.overview {
+  margin-bottom: 20px;
+}
+
+.thumbImage {
+  max-height: 250px !important;
+}
+
+.caption {
+  text-align: center !important;
+}

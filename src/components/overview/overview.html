@@ -1,0 +1,31 @@
+<h3 class="overview">Created Capsules</h3>
+
+<div ng-repeat="capsule in capsules" class="col-sm-6 col-md-3">
+  <div class="thumbnail season-thumbnail">
+    <a ng-href="#/capsules/{{capsule._id}}"><img class="thumbImage" ng-src="{{capsule.url}}" alt="Missing image"></a>
+    <div class="caption">
+      <a ng-href="#/capsules/{{capsule._id}}">
+        <h3>{{capsule.season}}</h3>
+        <p>{{capsule.description}}</p>
+      </a>
+      <button ng-click="editCapsule(capsule)" class="btn btn-default">Edit</button>
+      <button ng-click="deleteCapsule(capsule, $index)" class="btn btn-danger">Delete</button>
+    </div>
+  </div>
+</div>
+
+<div class="clear-floats">
+  <form>
+    <div class="form-group">
+      <label>Season</label>
+      <input type="text" class="form-control" ng-model="season" placeholder="Season">
+    </div>
+    <div class="form-group">
+      <label>Description</label>
+      <input type="text" class="form-control" ng-model="description" placeholder="Description">
+    </div>
+    <button ng-click="addCapsule(season, description)" class="btn btn-default">Submit</button>
+    <button ng-click="reset()" class="btn btn-default">Cancel</button>
+  </form>
+</div>
+
