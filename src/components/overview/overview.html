@@ -9,7 +9,7 @@
         <p>{{capsule.description}}</p>
       </a>
       <button ng-click="editCapsule(capsule)" class="btn btn-default">Edit</button>
-      <button ng-click="deleteCapsule(capsule, $index)" class="btn btn-danger">Delete</button>
+      <button ng-click="deleteCapsule(capsule, $index)" class="btn btn-danger deleteButton">Delete</button>
     </div>
   </div>
 </div>
@@ -24,7 +24,7 @@
       <label>Description</label>
       <input type="text" class="form-control" ng-model="description" placeholder="Description">
     </div>
-    <button ng-click="addCapsule(season, description)" class="btn btn-default">Submit</button>
+    <button ng-click="addCapsule(season, description)" class="btn btn-default addButton">Submit</button>
     <button ng-click="reset()" class="btn btn-default">Cancel</button>
   </form>
 </div>

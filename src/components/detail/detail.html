@@ -8,9 +8,9 @@
           <a ng-href="{{item.url}}"><img ng-src="{{item.image}}" alt="Missing image"></a>
           <div class="caption">
             <a ng-href="{{item.url}}"><h3>{{item.description}}</h3></a>
-            <div class="insert">Hearts: {{item.importance}}</div>
+            <div><input class="heart-rating" type="hidden" data-filled="glyphicon glyphicon-heart heart" data-empty="glyphicon glyphicon-heart-empty heart" value="3"></div>
             <button ng-click="edit(item)" class="btn btn-default">Edit</button>
-            <button ng-click="delete(item, $index)" class="btn btn-danger">Delete</button>
+            <button ng-click="delete(item, $index)" class="btn btn-danger deleteButton">Delete</button>
           </div>
         </div>
     </div>
@@ -42,9 +42,9 @@
     </div>
     <div class="form-group">
       <label>Hearts</label>
-      <input id="heart-rating" class="rating" type="hidden" data-filled="glyphicon glyphicon-heart heart" data-empty="glyphicon glyphicon-heart-empty heart">
+      <input class="heart-rating" type="hidden" data-filled="glyphicon glyphicon-heart heart" data-empty="glyphicon glyphicon-heart-empty heart">
     </div>
-    <button ng-click="addItem(new)" class="btn btn-default">Submit</button>
+    <button ng-click="addItem(new)" class="btn btn-default addButton">Submit</button>
     <button ng-click="reset()" class="btn btn-default">Cancel</button>
   </form>
 </div>
