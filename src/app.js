@@ -16,12 +16,20 @@ app.controller( 'AppCtrl', [ '$scope', '$http', function($scope, $http) {
 	});
 }]);
 
+app.controller( 'View1Ctrl', [ '$scope', function($scope) {
+	$scope.greet = function (name, city) {
+		$scope.greeting = `Hello ${name} from ${city}!`;
+	};
+}]);
+
 app.config(['$routeProvider', function($routeProvider) {
 	$routeProvider.when('/view1', {
-		template: view1
+		template: view1,
+		controller: 'View1Ctrl'
 	});
 	$routeProvider.when('/view2', {
-		template: view2
+		template: view2,
+		controller: 'View2Ctrl'
 	});
 	$routeProvider.otherwise({redirectTo: '/view1'});
 }]);
