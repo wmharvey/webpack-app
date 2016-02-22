@@ -1,6 +1,31 @@
 <h3 class="overview">Created Capsules</h3>
 
-<div ng-repeat="capsule in capsules" class="col-sm-6 col-md-3">
+<div>
+  Elasped: <input type="radio" ng-model="dateFormat" value="elasped">
+  Standard: <input type="radio" ng-model="dateFormat" value="standard">
+</div>
+
+<div>
+  View:
+  <select ng-model="sort.season">
+    <option value="">View all</option>
+    <option value="Winter">Winter</option>
+    <option value="Spring">Spring</option>
+    <option value="Summer">Summer</option>
+    <option value="Autumn">Autumn</option>
+  </select>
+  Order:
+  <select ng-model="order.date">
+    <option value="-createdAt">By creation</option>
+    <option value="-updatedAt">By update</option>
+    <option value="updatedAt">Most Recent Last</option>
+  </select>
+</div>
+
+<div ng-repeat="capsule in capsules
+                | filter: sort
+                | orderBy: order.date"
+                class="col-sm-6 col-md-3">
   <div class="thumbnail season-thumbnail">
     <a ng-href="#/capsules/{{capsule._id}}"><img class="thumbImage" ng-src="{{capsule.url}}" alt="Missing image"></a>
     <div class="caption">
@@ -8,6 +33,7 @@
         <h3>{{capsule.season}}</h3>
         <p>{{capsule.description}}</p>
       </a>
+      <div>Created: {{ capsule.createdAt | date:dateFormat }}</div>
       <button ng-click="editCapsule(capsule)" class="btn btn-default">Edit</button>
       <button ng-click="deleteCapsule(capsule, $index)" class="btn btn-danger deleteButton">Delete</button>
     </div>

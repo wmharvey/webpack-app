@@ -1,11 +1,12 @@
 describe('Detail page', function() {
 
   describe('clothing items', function() {
-    var count;
 
-    browser.get('/#/capsules/56c65d5f32df7a771ffecdc3');
-    element.all(by.repeater('item in items')).count().then( cnt => {
-      count = cnt;
+    beforeAll( function() {
+      browser.get('/#/capsules/56cb6cf5c45581ae40f69960');
+      element.all(by.repeater('item in items')).count().then( count => {
+        this.count = count;
+      });
     });
 
     it('should add an item', function() {
@@ -17,16 +18,18 @@ describe('Detail page', function() {
 
       element(by.css('.addButton')).click();
 
-      var moreItems = element.all(by.repeater('item in items'));
-      expect(moreItems.count()).toEqual(count + 1);
-      expect(moreItems.last().element(by.binding('item.description')).getText()).toEqual('jeans');
+      var items = element.all(by.repeater('item in items'));
+
+      expect(items.count()).toEqual(this.count + 1);
+      expect(items.last().element(by.binding('item.description')).getText()).toEqual('jeans');
+
     });
 
-    it('should delete a capsule', function() {
+    it('should delete an item', function() {
       var items = element.all(by.repeater('item in items'));
       items.last().element(by.css('.deleteButton')).click();
       var updatedItems = element.all(by.repeater('item in items'));
-      expect(updatedItems.count()).toEqual(count);
+      expect(updatedItems.count()).toEqual(this.count);
     });
 });
 

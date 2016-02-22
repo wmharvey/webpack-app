@@ -4,7 +4,7 @@ const angular = require('angular');
 
 export default function( app ) {
 
-  app.controller( 'detailCtrl', [ '$scope', '$http', '$routeParams', function( $scope, $http, $routeParams ) {
+  app.controller( 'detailCtrl', [ '$scope', '$http', '$routeParams', '$timeout', function( $scope, $http, $routeParams, $timeout ) {
 
     var iso = new Isotope( '.grid', {
       itemSelector: '.grid-item',
@@ -17,7 +17,7 @@ export default function( app ) {
     $('.heart-rating').rating();
 
     $http.get('http://localhost:8000/api/capsules/' + $routeParams.id).then( res => {
-      $scope.items = res.data.tops.concat(res.data.shoes).concat(res.data.bottoms).concat(res.data.accessories);
+      $scope.items = res.data.tops.concat(res.data.shoes, res.data.bottoms, res.data.accessories);
       $scope.capsule = res.data;
     });
 
@@ -28,7 +28,6 @@ export default function( app ) {
     };
 
     $scope.addItem = function(item) {
-      // $('.heart-rating').rating();
       item.importance = $('.heart-rating').filter(':last').val();
       $http.post('http://localhost:8000/api/clothes/', {
         capsule: $routeParams.id,

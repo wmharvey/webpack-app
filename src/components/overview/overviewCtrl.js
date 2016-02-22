@@ -8,6 +8,10 @@ export default function( app ) {
 
   app.controller( 'overviewCtrl', [ '$scope', '$http', function( $scope, $http ) {
 
+    $scope.dateFormat = 'elasped';
+    $scope.order = {};
+    $scope.order.date = '-createdAt';
+
     $http.get('http://localhost:8000/api/capsules').then( res => {
       res.data.forEach( capsule => {
         if (capsule.season === 'Spring') capsule.url = spring;

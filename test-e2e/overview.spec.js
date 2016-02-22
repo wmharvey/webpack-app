@@ -2,7 +2,7 @@ describe('Overview page', function() {
 
   describe('capsule thumbnails', function() {
 
-    beforeEach( function() {
+    beforeAll( function() {
       browser.get('/');
       element.all(by.repeater('capsule in capsules')).count().then( (count) => {
         this.count = count;
@@ -16,14 +16,14 @@ describe('Overview page', function() {
 
       var capsules = element.all(by.repeater('capsule in capsules'));
       expect(capsules.count()).toEqual(this.count + 1);
-      expect(capsules.last().element(by.binding('capsule.description')).getText()).toEqual('My test capsule');
+      expect(capsules.first().element(by.binding('capsule.description')).getText()).toEqual('My test capsule');
     });
 
     it('should delete a capsule', function() {
       var capsules = element.all(by.repeater('capsule in capsules'));
       capsules.last().element(by.css('.deleteButton')).click();
       capsules = element.all(by.repeater('capsule in capsules'));
-      expect(capsules.count()).toEqual(this.count - 1);
+      expect(capsules.count()).toEqual(this.count);
     });
 });
 
