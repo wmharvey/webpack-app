@@ -16,7 +16,7 @@ export default function( app ) {
 
     $scope.heartError = false;
     $scope.new = {};
-    $scope.new.value = 0;
+    $scope.new.importance = 0;
 
     $http.get('http://localhost:8000/api/capsules/' + $routeParams.id).then( res => {
       $scope.items = res.data.tops.concat(res.data.shoes, res.data.bottoms, res.data.accessories);
@@ -30,7 +30,7 @@ export default function( app ) {
     };
 
     $scope.addItem = function(item) {
-      if ( !$('.heart-rating').filter(':last').val() ) {
+      if(!item.importance) {
         $scope.heartError = true;
       } else {
         $http.post('http://localhost:8000/api/clothes/', {
@@ -39,11 +39,13 @@ export default function( app ) {
           description: item.description,
           url: item.url,
           image: item.image,
-          importance: $('.heart-rating').filter(':last').val()
+          importance: item.importance
         }).then( res => {
           $scope.items.push(res.data);
         });
         $scope.new = {};
+        $scope.heartError = false;
+        $scope.itemForm.$submitted = false;
         $scope.itemForm.url.$setUntouched();
         $scope.itemForm.image.$setUntouched();
         $scope.itemForm.description.$setUntouched();
