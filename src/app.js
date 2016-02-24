@@ -1,5 +1,9 @@
 import angular from 'angular';
 import router from 'angular-route';
+import messages from 'angular-messages';
+
+import filters from './filters';
+import components from './components';
 
 import template from './template.html';
 import overview from './components/overview/overview.html';
@@ -9,15 +13,9 @@ require('bootstrap');
 require("bootstrap/dist/css/bootstrap.css");
 import './css/main.css';
 
-import overviewCtrl from './components/overview/overviewCtrl';
-import detailCtrl from './components/detail/detailCtrl';
-
 const app = angular.module( 'myApp', [
-	router
+	router, filters, components, messages
 ]);
-
-overviewCtrl(app);
-detailCtrl(app);
 
 app.config(['$routeProvider', function($routeProvider) {
 	$routeProvider.when('/capsules', {

@@ -18,6 +18,7 @@ module.exports = function(config) {
     files: [
       './src/app.js',
       'node_modules/angular-mocks/angular-mocks.js',
+      'node_modules/moment/moment.js',
       './test/**/*.js'
     ],
 
@@ -61,7 +62,7 @@ module.exports = function(config) {
 
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-    browsers: ['Safari', 'Chrome'],
+    browsers: ['Chrome'],
 
 
     // Continuous Integration mode

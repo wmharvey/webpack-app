@@ -8,6 +8,11 @@ export default function( app ) {
 
   app.controller( 'overviewCtrl', [ '$scope', '$http', function( $scope, $http ) {
 
+    $scope.dateFormat = 'elasped';
+    $scope.order = {};
+    $scope.order.date = '-createdAt';
+    $scope.form = {};
+
     $http.get('http://localhost:8000/api/capsules').then( res => {
       res.data.forEach( capsule => {
         if (capsule.season === 'Spring') capsule.url = spring;
@@ -18,28 +23,30 @@ export default function( app ) {
       $scope.capsules = res.data;
     });
 
-    $scope.addCapsule = function(season, description) {
+    $scope.addCapsule = function(form) {
       $http.post('http://localhost:8000/api/capsules', {
-        season, description
+        season: form.season,
+        description: form.description
       }).then( res => {
         if (res.data.season === 'Spring') res.data.url = spring;
         if (res.data.season === 'Summer') res.data.url = summer;
         if (res.data.season === 'Autumn') res.data.url = autumn;
         if (res.data.season === 'Winter') res.data.url = winter;
         $scope.capsules.push(res.data);
-        $scope.season = '';
-        $scope.description = '';
+        $scope.form.season = '';
+        $scope.form.description = '';
       });
     };
 
+
     $scope.reset = function() {
-      $scope.season = '';
-      $scope.description = '';
+      $scope.form.season = '';
+      $scope.form.description = '';
     };
 
-    $scope.deleteCapsule = function(capsule, index) {
+    $scope.deleteCapsule = function(capsule) {
       $http.delete('http://localhost:8000/api/capsules/' + capsule._id).then( res => {
-        $scope.capsules.splice(index, 1);
+        $scope.capsules.splice($scope.capsules.indexOf(capsule),1);
       });
     };
 
