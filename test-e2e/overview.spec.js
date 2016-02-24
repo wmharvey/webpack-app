@@ -14,14 +14,22 @@ describe('MyApp', function() {
       });
 
       it('should add a capsule', function() {
-        element(by.model('season')).sendKeys('Spring');
-        element(by.model('description')).sendKeys('My test capsule');
+        element.all(by.model('form.season')).first().click();
+        element(by.model('form.description')).sendKeys('My test capsule');
         $('.addButton').click();
 
         var capsules = element.all(by.repeater('capsule in capsules'));
-        expect(capsules.count()).toEqual(this.count + 1);
-        capsuleElement = capsules.first().element(by.binding('capsule.description'));
-        expect(capsuleElement.getText()).toEqual('My test capsule');
+
+        capsules.count()
+        .then( count => {
+          expect(count).toEqual(this.count + 1);
+          return capsules.first().element(by.binding('capsule.description'));
+        })
+        .then( function(first) {
+          capsuleElement = first;
+          expect(first.getText()).toEqual('My test capsule');
+        });
+
       });
 
     });
@@ -44,7 +52,7 @@ describe('MyApp', function() {
         element(by.model('new.image')).sendKeys('www.testimage.com');
         element(by.model('new.description')).sendKeys('jeans');
         element(by.model('new.type')).$('[value="shoes"]').click();
-        $$('.rating-symbol').first().click();
+        $$('.rating-symbol').last().click();
 
         $('.addButton').click();
 
