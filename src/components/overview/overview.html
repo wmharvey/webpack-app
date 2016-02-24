@@ -85,7 +85,7 @@
            placeholder="Description"
            ng-maxlength="30"
            required>
-    <div ng-messages="capsuleForm.description.$error" ng-if="capsuleForm.$submitted || capsuleForm.description.$touched">
+    <div ng-messages="capsuleForm.description.$error" ng-if="capsuleForm.$submitted || capsuleForm.description.$touched" class="error">
       <div ng-message="required">A description is required</div>
       <div ng-message="maxlength">Must not exceed 10 characters</div>
     </div>

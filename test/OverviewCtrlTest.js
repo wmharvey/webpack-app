@@ -9,15 +9,15 @@ describe( 'The Overview Controller', () => {
           description: '2016',
           createdAt:'2016-02-22T07:33:08.000Z',
           updatedAt: '2016-02-22T07:59:17.915Z'
-        };
+  };
 
   beforeEach( angular.mock.inject( function( _$controller_, _$httpBackend_ ) {
     $controller = _$controller_;
     $httpBackend = _$httpBackend_;
-    $httpBackend.whenRoute('GET', 'http://localhost:8000/api/capsules')
-      .respond( () => {
-        return[200, [capsule]];
-      });
+    // $httpBackend.whenRoute('GET', 'http://localhost:8000/api/capsules')
+    //   .respond( () => {
+    //     return[200, [capsule]];
+    //   });
     $scope = {};
   }));
 
@@ -29,6 +29,9 @@ describe( 'The Overview Controller', () => {
   it( 'can get capsules', () => {
     $controller( 'overviewCtrl', { $scope } );
     $httpBackend.expectGET('http://localhost:8000/api/capsules')
+      .respond( () => {
+        return[200, [capsule] ];
+      });
     $httpBackend.flush();
     expect($scope.capsules).to.be.an('array');
     expect($scope.capsules).to.have.length(1);
@@ -37,22 +40,30 @@ describe( 'The Overview Controller', () => {
 
   it( 'can delete a capsule', () => {
     $controller( 'overviewCtrl', { $scope } );
+    $httpBackend.expectGET('http://localhost:8000/api/capsules')
+      .respond( () => {
+        return[200, [capsule] ];
+      });
     $httpBackend.expectDELETE('http://localhost:8000/api/capsules/123abc')
       .respond( () => {
           return[200, capsule];
         });
-    $scope.deleteCapsule(capsule, 0);
+    $scope.deleteCapsule(capsule);
     $httpBackend.flush();
     expect($scope.capsules).to.have.length(0);
   });
 
   it( 'can add a capsule', () => {
     $controller( 'overviewCtrl', { $scope } );
+    $httpBackend.expectGET('http://localhost:8000/api/capsules')
+      .respond( () => {
+        return[200, [capsule] ];
+      });
     $httpBackend.expectPOST('http://localhost:8000/api/capsules')
       .respond( () => {
           return[200, capsule];
         });
-    $scope.addCapsule('Spring', '2016');
+    $scope.addCapsule({ season: 'Spring', description: '2016' });
     $httpBackend.flush();
     expect($scope.capsules).to.have.length(2);
   });

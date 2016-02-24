@@ -44,24 +44,27 @@
   <form name="itemForm" novalidate>
     <div class="form-group">
       <label>URL</label>
-      <input type="text" class="form-control" ng-model="new.url" placeholder="www.site.com" name="url" required>
+      <input type="url" class="form-control" ng-model="new.url" placeholder="www.site.com" name="url" required>
     </div>
-    <div ng-messages="itemForm.url.$error" ng-if="itemForm.$submitted || itemForm.url.$touched">
+    <div ng-messages="itemForm.url.$error" ng-if="itemForm.$submitted || itemForm.url.$touched" class="error">
       <div ng-message="required">A url is required</div>
+      <div ng-message="url">The url is invalid</div>
     </div>
     <div class="form-group">
       <label>Image URL</label>
-      <input type="text" class="form-control" ng-model="new.image" placeholder="www.image.jpg" name="image" required>
+      <input type="url" class="form-control" ng-model="new.image" placeholder="www.image.jpg" name="image" required>
     </div>
-    <div ng-messages="itemForm.image.$error" ng-if="itemForm.$submitted || itemForm.image.$touched">
+    <div ng-messages="itemForm.image.$error" ng-if="itemForm.$submitted || itemForm.image.$touched" class="error">
       <div ng-message="required">An image is required</div>
+      <div ng-message="url">The image url is invalid</div>
     </div>
     <div class="form-group">
       <label>Description</label>
       <input type="text" class="form-control" ng-model="new.description" placeholder="Description" name="description" ng-maxlength="30" required>
     </div>
-    <div ng-messages="itemForm.description.$error" ng-if="itemForm.$submitted || itemForm.description.$touched">
+    <div ng-messages="itemForm.description.$error" ng-if="itemForm.$submitted || itemForm.description.$touched" class="error">
       <div ng-message="required">A description is required</div>
+      <div ng-message="maxlength">The description must be under 30 characters</div>
     </div>
     <div class="form-group">
       <label>Category</label>
@@ -71,14 +74,14 @@
         <option value="shoes">Shoes</option>
         <option value="accessories">Accessories</option>
       </select>
-      <div ng-messages="itemForm.category.$error" ng-if="itemForm.$submitted || itemForm.category.$touched">
+      <div ng-messages="itemForm.category.$error" ng-if="itemForm.$submitted || itemForm.category.$touched" class="error">
       <div ng-message="required">A category is required</div>
     </div>
     </div>
     <div class="form-group">
       <label>Hearts</label>
       <heart-rating></heart-rating>
-      <div ng-show="heartError">Please rate your item</div>
+      <div ng-show="heartError" class="error">Please rate your item</div>
     </div>
     <button ng-disabled='itemForm.$invalid' ng-click="addItem(new)" class="btn btn-default addButton">Submit</button>
     <button ng-click="reset()" class="btn btn-default cancelButton">Cancel</button>

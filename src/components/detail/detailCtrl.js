@@ -15,6 +15,8 @@ export default function( app ) {
     });
 
     $scope.heartError = false;
+    $scope.new = {};
+    $scope.new.value = 0;
 
     $http.get('http://localhost:8000/api/capsules/' + $routeParams.id).then( res => {
       $scope.items = res.data.tops.concat(res.data.shoes, res.data.bottoms, res.data.accessories);

@@ -48,8 +48,8 @@ describe('MyApp', function() {
       });
 
       it('should add an item', function() {
-        element(by.model('new.url')).sendKeys('www.test.com');
-        element(by.model('new.image')).sendKeys('www.testimage.com');
+        element(by.model('new.url')).sendKeys('http://test.com');
+        element(by.model('new.image')).sendKeys('http://testimage.jpg');
         element(by.model('new.description')).sendKeys('jeans');
         element(by.model('new.type')).$('[value="shoes"]').click();
         $$('.rating-symbol').last().click();
