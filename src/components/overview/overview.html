@@ -1,25 +1,37 @@
 <h3 class="overview">Created Capsules</h3>
 
-<div>
-  Elasped: <input type="radio" ng-model="dateFormat" value="elasped">
-  Standard: <input type="radio" ng-model="dateFormat" value="standard">
-</div>
+<div class="container">
 
-<div>
-  View:
-  <select ng-model="sort.season">
-    <option value="">View all</option>
-    <option value="Winter">Winter</option>
-    <option value="Spring">Spring</option>
-    <option value="Summer">Summer</option>
-    <option value="Autumn">Autumn</option>
-  </select>
-  Order:
-  <select ng-model="order.date">
-    <option value="-createdAt">By creation</option>
-    <option value="-updatedAt">By update</option>
-    <option value="updatedAt">Most Recent Last</option>
-  </select>
+  <div class="col-sm-6">
+    <div class="radio">
+      <label>
+        <input type="radio" ng-model="dateFormat" value="elasped">
+        Elasped time
+      </label>
+    </div>
+    <div class="radio">
+      <label>
+        <input type="radio" ng-model="dateFormat" value="standard">
+        Standard time
+      </label>
+    </div>
+  </div>
+
+  <div class="col-sm-6">
+    <select ng-model="sort.season" class="form-control">
+      <option value="">View all</option>
+      <option value="Winter">Winter</option>
+      <option value="Spring">Spring</option>
+      <option value="Summer">Summer</option>
+      <option value="Autumn">Autumn</option>
+    </select>
+    <select ng-model="order.date" class="form-control">
+      <option value="-createdAt">By creation</option>
+      <option value="-updatedAt">Most Recent First</option>
+      <option value="updatedAt">Most Recent Last</option>
+    </select>
+  </div>
+
 </div>
 
 <div ng-repeat="capsule in capsules
@@ -35,23 +47,51 @@
       </a>
       <div>Created: {{ capsule.createdAt | date:dateFormat }}</div>
       <button ng-click="editCapsule(capsule)" class="btn btn-default">Edit</button>
-      <button ng-click="deleteCapsule(capsule, $index)" class="btn btn-danger deleteButton">Delete</button>
+      <button ng-click="deleteCapsule(capsule)" class="btn btn-danger deleteButton">Delete</button>
     </div>
   </div>
 </div>
 
-<div class="clear-floats">
-  <form>
-    <div class="form-group">
-      <label>Season</label>
-      <input type="text" class="form-control" ng-model="season" placeholder="Season">
+<form name="capsuleForm" class="clear-floats" novalidate ng-submit="addCapsule(form)">
+  <h3>Add a capsule</h3>
+  <div class="form-group">
+    <label>Spring</label>
+    <input type="radio"
+           ng-model="form.season"
+           value="Spring"
+           ng-required="!form.season">
+    <label>Summer</label>
+    <input type="radio"
+           ng-model="form.season"
+           value="Summer"
+           ng-required="!form.season">
+    <label>Autumn</label>
+    <input type="radio"
+           ng-model="form.season"
+           value="Autumn"
+           ng-required="!form.season">
+    <label>Winter</label>
+    <input type="radio"
+           ng-model="form.season"
+           value="Winter"
+           ng-required="!form.season">
+  </div>
+  <div class="form-group">
+    <label>Description</label>
+    <input type="text"
+           name="description"
+           class="form-control"
+           ng-model="form.description"
+           placeholder="Description"
+           ng-maxlength="30"
+           required>
+    <div ng-messages="capsuleForm.description.$error" ng-if="capsuleForm.$submitted || capsuleForm.description.$touched">
+      <div ng-message="required">A description is required</div>
+      <div ng-message="maxlength">Must not exceed 10 characters</div>
     </div>
-    <div class="form-group">
-      <label>Description</label>
-      <input type="text" class="form-control" ng-model="description" placeholder="Description">
-    </div>
-    <button ng-click="addCapsule(season, description)" class="btn btn-default addButton">Submit</button>
-    <button ng-click="reset()" class="btn btn-default">Cancel</button>
-  </form>
-</div>
+  </div>
+  <input ng-disabled='capsuleForm.$invalid' class="btn btn-default addButton" type="submit"></input>
+  <button ng-click="reset()" class="btn btn-default">Cancel</button>
+</form>
+
 

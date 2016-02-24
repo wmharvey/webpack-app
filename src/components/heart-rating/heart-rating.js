@@ -1,15 +1,24 @@
 export default function( ngModule ) {
 
-  ngModule.directive('myHeart', [ '$timeout', function($timeout) {
+  ngModule.directive('heartRating', [ '$timeout', function($timeout) {
   return {
-    restrict: 'EA',
-    template: `<input class="heart-rating" type="hidden" data-filled="glyphicon glyphicon-heart heart" data-empty="glyphicon glyphicon-heart-empty heart" data-readonly ng-value="{{item.importance}}" />`,
-    link: function (scope) {
-      if (scope.$last) {
-        $timeout( function() {
-          $('.heart-rating').rating();
-        }, 0);
+    restrict: 'E',
+    replace: true,
+    scope: {
+      value: '=',
+      readOnly: '@'
+    },
+    template: `<input class="heart-rating" ng-show="false" ng-model=value />`,
+    link: function (scope, element, attr) {
+      if (scope.readOnly) {
+        element.attr('data-readonly', true);
       }
+      $timeout( function() {
+        $(element).rating({
+          filled: "glyphicon glyphicon-heart heart",
+          empty: "glyphicon glyphicon-heart-empty heart"
+        });
+      });
     }
   };
 }]);

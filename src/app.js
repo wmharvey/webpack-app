@@ -1,5 +1,6 @@
 import angular from 'angular';
 import router from 'angular-route';
+import messages from 'angular-messages';
 
 import filters from './filters';
 import components from './components';
@@ -13,7 +14,7 @@ require("bootstrap/dist/css/bootstrap.css");
 import './css/main.css';
 
 const app = angular.module( 'myApp', [
-	router, filters, components
+	router, filters, components, messages
 ]);
 
 app.config(['$routeProvider', function($routeProvider) {

@@ -1,19 +1,23 @@
 <h3 class="overview">{{capsule.season}}</h3>
 
-<div>
-  View:
-  <select ng-model="sort.type">
-    <option value="">View all</option>
-    <option value="tops">Tops</option>
-    <option value="bottoms">Bottoms</option>
-    <option value="shoes">Shoes</option>
-    <option value="accessories">Accessories</option>
-  </select>
-  Hearts:
-  <select ng-model="order.importance">
-    <option value="">Unordered</option>
-    <option value="-importance">Most hearts first</option>
-  </select>
+<div class="container">
+  <div class="col-xs-6">
+    View:
+    <select ng-model="sort.type" class="form-control">
+      <option value="">View all</option>
+      <option value="tops">Tops</option>
+      <option value="bottoms">Bottoms</option>
+      <option value="shoes">Shoes</option>
+      <option value="accessories">Accessories</option>
+    </select>
+  </div>
+  <div class="col-xs-6">
+    Hearts:
+    <select ng-model="order.importance" class="form-control">
+      <option value="">Unordered</option>
+      <option value="-importance">Most hearts first</option>
+    </select>
+  </div>
 </div>
 
 <div class="container-fluid">
@@ -27,9 +31,9 @@
           <a ng-href="{{item.url}}"><img ng-src="{{item.image}}" alt="Missing image"></a>
           <div class="caption">
             <a ng-href="{{item.url}}"><h3>{{item.description}}</h3></a>
-            <my-heart></my-heart>
+            <div><heart-rating value="item.importance" readOnly=true></heart-rating></div>
             <button ng-click="edit(item)" class="btn btn-default">Edit</button>
-            <button ng-click="delete(item, $index)" class="btn btn-danger deleteButton">Delete</button>
+            <button ng-click="delete(item)" class="btn btn-danger deleteButton">Delete</button>
           </div>
         </div>
     </div>
@@ -37,33 +41,46 @@
 </div>
 
 <div class="clear-floats">
-  <form>
+  <form name="itemForm" novalidate>
     <div class="form-group">
       <label>URL</label>
-      <input type="text" class="form-control" ng-model="new.url" placeholder="www.site.com">
+      <input type="text" class="form-control" ng-model="new.url" placeholder="www.site.com" name="url" required>
+    </div>
+    <div ng-messages="itemForm.url.$error" ng-if="itemForm.$submitted || itemForm.url.$touched">
+      <div ng-message="required">A url is required</div>
     </div>
     <div class="form-group">
       <label>Image URL</label>
-      <input type="text" class="form-control" ng-model="new.image" placeholder="www.image.jpg">
+      <input type="text" class="form-control" ng-model="new.image" placeholder="www.image.jpg" name="image" required>
+    </div>
+    <div ng-messages="itemForm.image.$error" ng-if="itemForm.$submitted || itemForm.image.$touched">
+      <div ng-message="required">An image is required</div>
     </div>
     <div class="form-group">
       <label>Description</label>
-      <input type="text" class="form-control" ng-model="new.description" placeholder="Description">
+      <input type="text" class="form-control" ng-model="new.description" placeholder="Description" name="description" ng-maxlength="30" required>
+    </div>
+    <div ng-messages="itemForm.description.$error" ng-if="itemForm.$submitted || itemForm.description.$touched">
+      <div ng-message="required">A description is required</div>
     </div>
     <div class="form-group">
       <label>Category</label>
-      <select ng-model="new.type">
+      <select ng-model="new.type" name="category" required>
         <option value="tops">Tops</option>
         <option value="bottoms">Bottoms</option>
         <option value="shoes">Shoes</option>
         <option value="accessories">Accessories</option>
       </select>
+      <div ng-messages="itemForm.category.$error" ng-if="itemForm.$submitted || itemForm.category.$touched">
+      <div ng-message="required">A category is required</div>
+    </div>
     </div>
     <div class="form-group">
       <label>Hearts</label>
-      <input class="heart-rating" type="hidden" data-filled="glyphicon glyphicon-heart heart" data-empty="glyphicon glyphicon-heart-empty heart">
+      <heart-rating></heart-rating>
+      <div ng-show="heartError">Please rate your item</div>
     </div>
-    <button ng-click="addItem(new)" class="btn btn-default addButton">Submit</button>
+    <button ng-disabled='itemForm.$invalid' ng-click="addItem(new)" class="btn btn-default addButton">Submit</button>
     <button ng-click="reset()" class="btn btn-default cancelButton">Cancel</button>
   </form>
 </div>
