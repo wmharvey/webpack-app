@@ -1,0 +1,19 @@
+<div class="container">
+  <div class="col-xs-6">
+    View:
+    <select ng-model="sort.type" class="form-control">
+      <option value="">View all</option>
+      <option value="tops">Tops</option>
+      <option value="bottoms">Bottoms</option>
+      <option value="shoes">Shoes</option>
+      <option value="accessories">Accessories</option>
+    </select>
+  </div>
+  <div class="col-xs-6">
+    Hearts:
+    <select ng-model="order.importance" class="form-control">
+      <option value="">Unordered</option>
+      <option value="-importance">Most hearts first</option>
+    </select>
+  </div>
+</div>

@@ -14,26 +14,19 @@ export default function( app ) {
       }
     });
 
-    $scope.heartError = false;
-    $scope.new = {};
-    $scope.new.importance = 0;
-
     $http.get('http://localhost:8000/api/capsules/' + $routeParams.id).then( res => {
       $scope.items = res.data.tops.concat(res.data.shoes, res.data.bottoms, res.data.accessories);
       $scope.capsule = res.data;
     });
 
-    $scope.delete = function (item) {
+    $scope.deleteItem = function (item) {
       $http.delete('http://localhost:8000/api/clothes/' + item._id).then( res => {
         $scope.items.splice($scope.items.indexOf(item), 1);
       });
     };
 
     $scope.addItem = function(item) {
-      if(!item.importance) {
-        $scope.heartError = true;
-      } else {
-        $http.post('http://localhost:8000/api/clothes/', {
+      $http.post('http://localhost:8000/api/clothes/', {
           capsule: $routeParams.id,
           type: item.type,
           description: item.description,
@@ -43,14 +36,6 @@ export default function( app ) {
         }).then( res => {
           $scope.items.push(res.data);
         });
-        $scope.new = {};
-        $scope.heartError = false;
-        $scope.itemForm.$submitted = false;
-        $scope.itemForm.url.$setUntouched();
-        $scope.itemForm.image.$setUntouched();
-        $scope.itemForm.description.$setUntouched();
-        $scope.itemForm.category.$setUntouched();
-      }
     };
 
   }]);

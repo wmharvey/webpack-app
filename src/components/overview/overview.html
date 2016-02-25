@@ -1,97 +1,13 @@
 <h3 class="overview">Created Capsules</h3>
 
-<div class="container">
-
-  <div class="col-sm-6">
-    <div class="radio">
-      <label>
-        <input type="radio" ng-model="dateFormat" value="elasped">
-        Elasped time
-      </label>
-    </div>
-    <div class="radio">
-      <label>
-        <input type="radio" ng-model="dateFormat" value="standard">
-        Standard time
-      </label>
-    </div>
-  </div>
-
-  <div class="col-sm-6">
-    <select ng-model="sort.season" class="form-control">
-      <option value="">View all</option>
-      <option value="Winter">Winter</option>
-      <option value="Spring">Spring</option>
-      <option value="Summer">Summer</option>
-      <option value="Autumn">Autumn</option>
-    </select>
-    <select ng-model="order.date" class="form-control">
-      <option value="-createdAt">By creation</option>
-      <option value="-updatedAt">Most Recent First</option>
-      <option value="updatedAt">Most Recent Last</option>
-    </select>
-  </div>
-
-</div>
+<overview-filterbar format="dateFormat" sort="sort" order="order"></overview-filterbar>
 
 <div ng-repeat="capsule in capsules
                 | filter: sort
-                | orderBy: order.date"
-                class="col-sm-6 col-md-3">
-  <div class="thumbnail season-thumbnail">
-    <a ng-href="#/capsules/{{capsule._id}}"><img class="thumbImage" ng-src="{{capsule.url}}" alt="Missing image"></a>
-    <div class="caption">
-      <a ng-href="#/capsules/{{capsule._id}}">
-        <h3>{{capsule.season}}</h3>
-        <p>{{capsule.description}}</p>
-      </a>
-      <div>Created: {{ capsule.createdAt | date:dateFormat }}</div>
-      <button ng-click="editCapsule(capsule)" class="btn btn-default">Edit</button>
-      <button ng-click="deleteCapsule(capsule)" class="btn btn-danger deleteButton">Delete</button>
-    </div>
-  </div>
+                | orderBy: order.date" class="col-sm-6 col-md-3">
+  <capsule capsule="capsule" delete="deleteCapsule" date={{dateFormat}}></capsule>
 </div>
 
-<form name="capsuleForm" class="clear-floats" novalidate ng-submit="addCapsule(form)">
-  <h3>Add a capsule</h3>
-  <div class="form-group">
-    <label>Spring</label>
-    <input type="radio"
-           ng-model="form.season"
-           value="Spring"
-           ng-required="!form.season">
-    <label>Summer</label>
-    <input type="radio"
-           ng-model="form.season"
-           value="Summer"
-           ng-required="!form.season">
-    <label>Autumn</label>
-    <input type="radio"
-           ng-model="form.season"
-           value="Autumn"
-           ng-required="!form.season">
-    <label>Winter</label>
-    <input type="radio"
-           ng-model="form.season"
-           value="Winter"
-           ng-required="!form.season">
-  </div>
-  <div class="form-group">
-    <label>Description</label>
-    <input type="text"
-           name="description"
-           class="form-control"
-           ng-model="form.description"
-           placeholder="Description"
-           ng-maxlength="30"
-           required>
-    <div ng-messages="capsuleForm.description.$error" ng-if="capsuleForm.$submitted || capsuleForm.description.$touched" class="error">
-      <div ng-message="required">A description is required</div>
-      <div ng-message="maxlength">Must not exceed 10 characters</div>
-    </div>
-  </div>
-  <input ng-disabled='capsuleForm.$invalid' class="btn btn-default addButton" type="submit"></input>
-  <button ng-click="reset()" class="btn btn-default">Cancel</button>
-</form>
+<capsule-form add="addCapsule"></capsule-form>
 
 

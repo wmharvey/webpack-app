@@ -8,10 +8,7 @@ export default function( app ) {
 
   app.controller( 'overviewCtrl', [ '$scope', '$http', function( $scope, $http ) {
 
-    $scope.dateFormat = 'elasped';
     $scope.order = {};
-    $scope.order.date = '-createdAt';
-    $scope.form = {};
 
     $http.get('http://localhost:8000/api/capsules').then( res => {
       res.data.forEach( capsule => {
@@ -33,15 +30,7 @@ export default function( app ) {
         if (res.data.season === 'Autumn') res.data.url = autumn;
         if (res.data.season === 'Winter') res.data.url = winter;
         $scope.capsules.push(res.data);
-        $scope.form.season = '';
-        $scope.form.description = '';
       });
-    };
-
-
-    $scope.reset = function() {
-      $scope.form.season = '';
-      $scope.form.description = '';
     };
 
     $scope.deleteCapsule = function(capsule) {
