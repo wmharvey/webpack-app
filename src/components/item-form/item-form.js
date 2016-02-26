@@ -12,7 +12,7 @@ export default function( ngModule ) {
       template,
       controller: [ '$scope', function( $scope ) {
 
-        $scope.resetForm = function() {
+        $scope.reset = function() {
           $scope.new = {
             url: "",
             image: "",

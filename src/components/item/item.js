@@ -1,4 +1,5 @@
 import template from './item.html';
+import formTemplate from '../item-editform/item-editform.html';
 
 export default function( ngModule ) {
 
@@ -11,14 +12,19 @@ export default function( ngModule ) {
         delete: '&'
       },
       template,
-      controller: [ '$scope', function( $scope ) {
+      controller: [ '$scope', 'ngDialog', function( $scope, ngDialog ) {
 
         $scope.deleteItem = function() {
           $scope.delete()($scope.item);
         };
 
-        $scope.editItem = function() {
-          //to do
+        $scope.openEdit = function() {
+          ngDialog.open({
+            template: formTemplate,
+            plain: true,
+            controller: 'itemEditCtrl',
+            scope: $scope
+          });
         };
 
       }]

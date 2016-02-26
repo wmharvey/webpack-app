@@ -51,7 +51,8 @@
     "isotope-fit-columns": "^1.1.2",
     "isotope-layout": "^2.2.2",
     "jquery": "^2.2.0",
-    "moment": "^2.11.2"
+    "moment": "^2.11.2",
+    "ng-dialog": "^0.5.8"
   },
   "babel": {
     "presets": [

@@ -3,7 +3,7 @@
   <div class="caption">
     <a ng-href="{{item.url}}"><h3>{{item.description}}</h3></a>
     <div><heart-rating value="item.importance" readOnly=true></heart-rating></div>
-    <button ng-click="editItem()" class="btn btn-default">Edit</button>
+    <button ng-click="openEdit()" class="btn btn-default">Edit</button>
     <button ng-click="deleteItem()" class="btn btn-danger deleteButton">Delete</button>
   </div>
 </div>

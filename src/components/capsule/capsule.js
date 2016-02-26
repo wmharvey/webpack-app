@@ -1,4 +1,5 @@
 import template from './capsule.html';
+import formTemplate from '../capsule-editform/capsule-editform.html';
 
 export default function( ngModule ) {
 
@@ -12,14 +13,19 @@ export default function( ngModule ) {
         dateFormat: '@date'
       },
       template,
-      controller: [ '$scope', function( $scope ) {
+      controller: [ '$scope', 'ngDialog', function( $scope, ngDialog ) {
+
+        $scope.openEdit = function() {
+          ngDialog.open({
+            template: formTemplate,
+            plain: true,
+            controller: 'capsuleEditCtrl',
+            scope: $scope
+          });
+        };
 
         $scope.deleteCapsule = function() {
           $scope.delete()($scope.capsule);
-        };
-
-        $scope.editCapsule = function() {
-          //to do
         };
 
       }]

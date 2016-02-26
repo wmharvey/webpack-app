@@ -1,0 +1,52 @@
+<form name="editForm" novalidate>
+  <div>Edit Clothing Item</div>
+
+  <div class="form-group">
+    <label>URL</label>
+    <input type="url" class="form-control" ng-model="new.url" placeholder="www.site.com" name="url" required>
+    <div ng-messages="editForm.url.$error" ng-if="editForm.url.$touched" class="error">
+      <div ng-message="required">A url is required</div>
+      <div ng-message="url">The url is invalid</div>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label>Image URL</label>
+    <input type="url" class="form-control" ng-model="new.image" placeholder="www.image.jpg" name="image" required>
+    <div ng-messages="editForm.image.$error" ng-if="editForm.image.$touched" class="error">
+      <div ng-message="required">An image is required</div>
+      <div ng-message="url">The image url is invalid</div>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label>Description</label>
+    <input type="text" class="form-control" ng-model="new.description" placeholder="Description" name="description" required>
+    <div ng-messages="editForm.description.$error" ng-if="editForm.description.$touched" class="error">
+      <div ng-message="required">A description is required</div>
+      <div ng-message="maxlength">The description must be under 30 characters</div>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label>Type</label>
+    <select ng-model="new.type" name="category" required>
+      <option value="tops">Tops</option>
+      <option value="bottoms">Bottoms</option>
+      <option value="shoes">Shoes</option>
+      <option value="accessories">Accessories</option>
+    </select>
+    <div ng-messages="editForm.category.$error" ng-if="editForm.category.$touched" class="error">
+      <div ng-message="required">A category is required</div>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label>Hearts</label>
+    <heart-rating value="new.importance"></heart-rating>
+    <div ng-show="heartError" class="error">Please rate your item</div>
+  </div>
+
+  <button ng-disabled='editForm.$invalid' ng-click="submitEdit()" class="btn btn-default addButton">Submit</button>
+
+</form>

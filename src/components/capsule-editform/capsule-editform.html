@@ -1,0 +1,36 @@
+<form name="editForm" novalidate>
+  <div>Edit a capsule</div>
+
+  <div class="form-group">Change season:
+    <label>Spring</label>
+    <input type="radio"
+           ng-model="editCapsule.season"
+           value="Spring">
+    <label>Summer</label>
+    <input type="radio"
+           ng-model="editCapsule.season"
+           value="Summer">
+    <label>Autumn</label>
+    <input type="radio"
+           ng-model="editCapsule.season"
+           value="Autumn">
+    <label>Winter</label>
+    <input type="radio"
+           ng-model="editCapsule.season"
+           value="Winter">
+  </div>
+
+  <div class="form-group">
+    <label>Description</label>
+    <input type="text"
+           name="description"
+           class="form-control"
+           ng-model="editCapsule.description"
+           ng-maxlength="30">
+    <div ng-messages="editForm.description.$error" ng-if="editForm.description.$touched" class="error">
+      <div ng-message="maxlength">Must not exceed 10 characters</div>
+    </div>
+  </div>
+
+  <button ng-disabled='editForm.$invalid' class="btn btn-default addButton" ng-click="submitEdit()">Submit</button>
+</form>

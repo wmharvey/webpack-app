@@ -48,8 +48,8 @@
       <div ng-show="heartError" class="error">Please rate your item</div>
     </div>
 
-    <button ng-disabled='itemForm.$invalid' ng-click="addItem(new)" class="btn btn-default addButton">Submit</button>
-    <button ng-click="resetForm()" class="btn btn-default cancelButton">Cancel</button>
+    <button ng-disabled='itemForm.$invalid' class="btn btn-default addButton" ng-click="submitEdit()">Submit</button>
+    <button ng-click="reset()" class="btn btn-default">Cancel</button>
 
   </form>
 </div>

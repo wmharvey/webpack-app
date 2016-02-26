@@ -6,7 +6,7 @@
       <p>{{capsule.description}}</p>
     </a>
     <div>Created: {{ capsule.createdAt | date:dateFormat }}</div>
-    <button ng-click="editCapsule()" class="btn btn-default">Edit</button>
+    <button ng-click="openEdit()" class="btn btn-default">Edit</button>
     <button ng-click="deleteCapsule()" class="btn btn-danger deleteButton">Delete</button>
   </div>
 </div>
