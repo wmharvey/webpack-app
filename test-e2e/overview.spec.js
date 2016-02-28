@@ -1,7 +1,5 @@
 describe('MyApp', function() {
 
-  var capsuleElement;
-
   describe('Overview page (modify capsules)', function() {
 
     describe('capsule thumbnails', function() {
@@ -14,8 +12,8 @@ describe('MyApp', function() {
       });
 
       it('should add a capsule', function() {
-        element.all(by.model('form.season')).first().click();
-        element(by.model('form.description')).sendKeys('My test capsule');
+        element.all(by.model('capsule.season')).first().click();
+        element(by.model('capsule.description')).sendKeys('My test capsule');
         $('.addButton').click();
 
         var capsules = element.all(by.repeater('capsule in capsules'));
@@ -26,12 +24,33 @@ describe('MyApp', function() {
           return capsules.first().element(by.binding('capsule.description'));
         })
         .then( function(first) {
-          capsuleElement = first;
           expect(first.getText()).toEqual('My test capsule');
         });
 
       });
 
+    });
+
+    describe('capsule edit form', function() {
+      it('should edit a capsule', function() {
+        $$('.editButton').first().click()
+        .then(function() {
+          return element.all(by.model('editCapsule.season')).first().click();
+        })
+        .then(function() {
+          return element(by.model('editCapsule.description')).sendKeys('+edit');
+        })
+        .then(function() {
+          return $('.editFormButton').click();
+        })
+        .then(function() {
+          return element.all(by.repeater('capsule in capsules')).first().element(by.binding('capsule.description')).getText()
+        })
+        .then( function(text) {
+          // expect(text).toEqual('My test capsule+edit');
+        });
+
+      });
     });
 
   });
@@ -41,7 +60,7 @@ describe('MyApp', function() {
     describe('clothing items', function() {
 
       beforeAll( function() {
-        capsuleElement.click();
+        element.all(by.repeater('capsule in capsules')).first().element(by.binding('capsule.description')).click();
         element.all(by.repeater('item in items')).count().then( count => {
           this.count = count;
         });

@@ -4,20 +4,16 @@ describe( 'The Overview Controller', () => {
 
   var $controller, $scope, $httpBackend;
   var capsule = {
-          _id: '123abc',
-          season: 'Spring',
-          description: '2016',
-          createdAt:'2016-02-22T07:33:08.000Z',
-          updatedAt: '2016-02-22T07:59:17.915Z'
+    _id: '123abc',
+    season: 'Spring',
+    description: '2016',
+    createdAt:'2016-02-22T07:33:08.000Z',
+    updatedAt: '2016-02-22T07:59:17.915Z'
   };
 
   beforeEach( angular.mock.inject( function( _$controller_, _$httpBackend_ ) {
     $controller = _$controller_;
     $httpBackend = _$httpBackend_;
-    // $httpBackend.whenRoute('GET', 'http://localhost:8000/api/capsules')
-    //   .respond( () => {
-    //     return[200, [capsule]];
-    //   });
     $scope = {};
   }));
 
