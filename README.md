@@ -1,5 +1,5 @@
 # Project Info
-A capsule wardrobe project to practice angular features, tdd, and webpack
+A capsule wardrobe project to practice angular features, tdd, and webpack.
 This is a double repository app, so make sure to download both webpack-app and webpack-server into the same folder
 
 ## Test setup
