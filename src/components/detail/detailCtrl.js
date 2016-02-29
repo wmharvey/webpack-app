@@ -4,7 +4,8 @@ const angular = require('angular');
 
 export default function( app ) {
 
-  app.controller( 'detailCtrl', [ '$scope', '$http', '$routeParams', '$timeout', function( $scope, $http, $routeParams, $timeout ) {
+  app.controller( 'detailCtrl', [ '$scope', 'CapsuleService', 'ClothesService', '$routeParams', '$timeout',
+  function( $scope, Capsule, Clothes, $routeParams, $timeout ) {
 
     var iso = new Isotope( '.grid', {
       itemSelector: '.grid-item',
@@ -14,28 +15,29 @@ export default function( app ) {
       }
     });
 
-    $http.get('http://localhost:8000/api/capsules/' + $routeParams.id).then( res => {
-      $scope.items = res.data.tops.concat(res.data.shoes, res.data.bottoms, res.data.accessories);
-      $scope.capsule = res.data;
+    var capsuleContents = Capsule.get({id: $routeParams.id});
+    capsuleContents.$promise.then(function(data) {
+      $scope.items = data.tops.concat(data.shoes, data.bottoms, data.accessories);
+      $scope.capsule = data;
     });
 
     $scope.deleteItem = function (item) {
-      $http.delete('http://localhost:8000/api/clothes/' + item._id).then( res => {
-        $scope.items.splice($scope.items.indexOf(item), 1);
-      });
+      Clothes.remove({id: item._id});
+      $scope.items.splice($scope.items.indexOf(item), 1);
     };
 
     $scope.addItem = function(item) {
-      $http.post('http://localhost:8000/api/clothes/', {
-          capsule: $routeParams.id,
-          type: item.type,
-          description: item.description,
-          url: item.url,
-          image: item.image,
-          importance: item.importance
-        }).then( res => {
-          $scope.items.push(res.data);
-        });
+      var saved = Clothes.save({
+        capsule: $routeParams.id,
+        type: item.type,
+        description: item.description,
+        url: item.url,
+        image: item.image,
+        importance: item.importance
+      });
+      saved.$promise.then( function (data) {
+        $scope.items.push(data);
+      });
     };
 
   }]);

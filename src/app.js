@@ -1,10 +1,12 @@
 import angular from 'angular';
 import router from 'angular-route';
+import ngResource from 'angular-resource';
 import messages from 'angular-messages';
 import ngDialog from 'ng-dialog';
 
 import filters from './filters';
 import components from './components';
+import services from './services';
 
 import template from './template.html';
 import overview from './components/overview/overview.html';
@@ -17,8 +19,12 @@ require('ng-dialog/css/ngDialog-theme-default.css');
 import './css/main.css';
 
 const app = angular.module( 'myApp', [
-	router, filters, components, messages, ngDialog
+	router, ngResource, filters, components, services, messages, ngDialog
 ]);
+
+app.config(['welcomeMessageProvider', function(welcome) {
+	welcome.setWelcome('message', 'Welcome to the site!');
+}]);
 
 app.config(['$routeProvider', function($routeProvider) {
 	$routeProvider.when('/capsules', {

@@ -6,37 +6,37 @@ import winter from '../../images/seasons/winter.png';
 
 export default function( app ) {
 
-  app.controller( 'overviewCtrl', [ '$scope', '$http', function( $scope, $http ) {
+  app.controller( 'overviewCtrl', [ '$scope', 'CapsuleService', 'welcomeMessage', function( $scope, Capsule, welcome ) {
 
     $scope.order = {};
+    $scope.message = welcome;
 
-    $http.get('http://localhost:8000/api/capsules').then( res => {
-      res.data.forEach( capsule => {
+    Capsule.query().$promise.then( data => {
+      data.forEach( capsule => {
         if (capsule.season === 'Spring') capsule.url = spring;
         if (capsule.season === 'Summer') capsule.url = summer;
         if (capsule.season === 'Autumn') capsule.url = autumn;
         if (capsule.season === 'Winter') capsule.url = winter;
       });
-      $scope.capsules = res.data;
+      $scope.capsules = data;
     });
 
     $scope.addCapsule = function(form) {
-      $http.post('http://localhost:8000/api/capsules', {
+      Capsule.save({
         season: form.season,
         description: form.description
-      }).then( res => {
-        if (res.data.season === 'Spring') res.data.url = spring;
-        if (res.data.season === 'Summer') res.data.url = summer;
-        if (res.data.season === 'Autumn') res.data.url = autumn;
-        if (res.data.season === 'Winter') res.data.url = winter;
-        $scope.capsules.push(res.data);
+      }).$promise.then( data => {
+        if (data.season === 'Spring') data.url = spring;
+        if (data.season === 'Summer') data.url = summer;
+        if (data.season === 'Autumn') data.url = autumn;
+        if (data.season === 'Winter') data.url = winter;
+        $scope.capsules.push(data);
       });
     };
 
-    $scope.deleteCapsule = function(capsule) {
-      $http.delete('http://localhost:8000/api/capsules/' + capsule._id).then( res => {
-        $scope.capsules.splice($scope.capsules.indexOf(capsule),1);
-      });
+    $scope.deleteCapsule = function (capsule) {
+      Capsule.delete({id: capsule._id});
+      $scope.capsules.splice($scope.capsules.indexOf(capsule), 1);
     };
 
   }]);

@@ -13,7 +13,6 @@ export default function( ngModule ) {
       controller: [ '$scope', function( $scope ) {
 
         $scope.reset = function() {
-          console.log('trying to reset');
           $scope.capsule = {
             season: "",
             description: ""
