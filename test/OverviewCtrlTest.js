@@ -40,6 +40,7 @@ describe( 'The Overview Controller', () => {
       .respond( () => {
         return[200, [capsule] ];
       });
+    $httpBackend.flush();
     $httpBackend.expectDELETE('http://localhost:8000/api/capsules/123abc')
       .respond( () => {
           return[200, capsule];

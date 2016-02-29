@@ -57,6 +57,7 @@ describe( 'The Detail Controller', () => {
       .respond( () => {
         return[200, capsule];
       });
+    $httpBackend.flush();
     $httpBackend.expectDELETE('http://localhost:8000/api/clothes/123')
       .respond( () => {
           return[200];
@@ -75,7 +76,7 @@ describe( 'The Detail Controller', () => {
       .respond( () => {
         return[200, capsule];
       });
-    $httpBackend.expectPOST('http://localhost:8000/api/clothes/')
+    $httpBackend.expectPOST('http://localhost:8000/api/clothes')
       .respond( () => {
           return[200, item];
         });
