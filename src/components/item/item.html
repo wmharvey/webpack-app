@@ -1,9 +1,12 @@
-<div class="thumbnail">
-  <a ng-href="{{item.url}}"><img ng-src="{{item.image}}" alt="Missing image"></a>
-  <div class="caption">
-    <a ng-href="{{item.url}}"><h3>{{item.description}}</h3></a>
-    <div><heart-rating value="item.importance" readOnly=true></heart-rating></div>
-    <button ng-click="openEdit()" class="btn btn-default">Edit</button>
-    <button ng-click="deleteItem()" class="btn btn-danger deleteButton">Delete</button>
+<div>
+  <div class="thumbnail">
+    <a ng-href="{{item.url}}"><img class="item-image" ng-src="{{item.image}}" alt="Missing image"></a>
+    <div class="caption">
+      <a ng-href="{{item.url}}"><h3>{{item.description}}</h3></a>
+      <div><heart-rating value="item.importance" readOnly=true></heart-rating></div>
+      <div ui-sref='details.iframe({ url: item.url })'>See iframe</div>
+      <button ng-click="openEdit()" class="btn btn-default">Edit</button>
+      <button ng-click="deleteItem()" class="btn btn-danger deleteButton">Delete</button>
+    </div>
   </div>
 </div>

@@ -1,5 +1,6 @@
 import template from './item.html';
 import formTemplate from '../item-editform/item-editform.html';
+import './item.css';
 
 export default function( ngModule ) {
 

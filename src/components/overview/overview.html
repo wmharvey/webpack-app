@@ -1,19 +1,20 @@
-<h3 class="overview">Created Capsules</h3>
+<div>
+  <h3 class="overview">Created Capsules</h3>
 
-<overview-filterbar format="dateFormat" sort="sort" order="order"></overview-filterbar>
+  <overview-filterbar format="dateFormat" sort="sort" order="order"></overview-filterbar>
 
-<div ng-repeat="capsule in capsules
-                | filter: sort
-                | orderBy: order.date" class="col-sm-6 col-md-3">
-  <capsule capsule="capsule" delete="deleteCapsule" date={{dateFormat}}></capsule>
+  <div ng-repeat="capsule in capsules
+                  | filter: sort
+                  | orderBy: order.date
+                  track by capsule._id" class="col-sm-6 col-md-3">
+    <capsule capsule="capsule" delete="deleteCapsule" date={{dateFormat}}></capsule>
+  </div>
+
+  <capsule-form add="addCapsule"></capsule-form>
+
+  <footer>
+    <p>{{message.message}}</p>
+    <p>Last updated: {{message.updated}}</p>
+    <p><a ng-href={{message.source}}>View source code here</a></p>
+  </footer>
 </div>
-
-<capsule-form add="addCapsule"></capsule-form>
-
-<footer>
-  <p>{{message.message}}</p>
-  <p>Last updated: {{message.updated}}</p>
-  <p><a ng-href={{message.source}}>View source code here</a></p>
-</footer>
-
-

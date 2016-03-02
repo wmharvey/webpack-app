@@ -1,7 +1,7 @@
 <div class="thumbnail season-thumbnail">
-  <a ng-href="#/capsules/{{capsule._id}}"><img class="thumbImage" ng-src="{{capsule.url}}" alt="Missing image"></a>
+  <a ui-sref="details({id: capsule._id})"><img class="thumbImage" ng-src="{{capsule.url}}" alt="Missing image"></a>
   <div class="caption">
-    <a ng-href="#/capsules/{{capsule._id}}">
+    <a ui-sref="details({id: capsule._id})">
       <h3>{{capsule.season}}</h3>
       <p>{{capsule.description}}</p>
     </a>

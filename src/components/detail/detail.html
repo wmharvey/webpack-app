@@ -1,17 +1,26 @@
-<h3 class="overview">{{capsule.season}}</h3>
+<div>
 
-<detail-filterbar sort="sort" order="order"></detail-filterbar>
+  <h3 class="overview">{{capsule.season}}</h3>
 
-<div class="container-fluid">
-  <div class="grid">
-    <div class="grid-sizer col-xs-12 col-sm-4 col-md-3"></div>
-    <div class="grid-item col-xs-12 col-sm-4 col-md-3"
-                ng-repeat="item in items
-                          | filter: sort
-                          | orderBy: order.importance">
-        <item item="item" delete="deleteItem"></item>
-    </div>
-  </div>
+  <detail-filterbar sort="sort" order="order"></detail-filterbar>
+
+  <section class="flex-container main-detail-section">
+
+      <div class="flex-child1">
+        <div class="flex-container">
+          <div class="flex-child2" ng-repeat="item in items
+                         | filter: sort
+                         | orderBy: order.importance">
+              <item item="item" delete="deleteItem"></item>
+          </div>
+        </div>
+      </div>
+
+      <div ui-view class="flex-child1"></div>
+
+  </section>
+
+
+  <item-form add="addItem"></item-form>
+
 </div>
-
-<item-form add="addItem"></item-form>
