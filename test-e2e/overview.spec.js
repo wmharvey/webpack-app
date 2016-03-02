@@ -32,7 +32,7 @@ describe('MyApp', function() {
     });
 
     describe('capsule edit form', function() {
-      it('should edit a capsule', function() {
+      it('should edit a capsule', function(done) {
         $$('.editButton').first().click()
         .then(function() {
           return element.all(by.model('editCapsule.season')).first().click();
@@ -48,6 +48,7 @@ describe('MyApp', function() {
         })
         .then( function(text) {
           // expect(text).toEqual('My test capsule+edit');
+          done();
         });
 
       });
@@ -59,7 +60,8 @@ describe('MyApp', function() {
 
     describe('clothing items', function() {
 
-      beforeAll( function() {
+      beforeAll( function(done) {
+        browser.pause();
         element.all(by.repeater('capsule in capsules')).first().element(by.binding('capsule.description')).click();
         element.all(by.repeater('item in items')).count().then( count => {
           this.count = count;
