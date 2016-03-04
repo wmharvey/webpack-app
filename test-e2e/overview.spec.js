@@ -1,11 +1,22 @@
 describe('MyApp', function() {
 
+  describe('Logging in', function() {
+
+    it('should log a user in', function() {
+      browser.get('/#/login');
+      element(by.model('user.username')).sendKeys('whitney');
+      element(by.model('user.password')).sendKeys('abc');
+      $('#login-submit').click();
+    });
+
+  });
+
   describe('Overview page (modify capsules)', function() {
 
     describe('capsule thumbnails', function() {
 
       beforeAll( function() {
-        browser.get('/');
+        $('#nav-capsule').click();
         element.all(by.repeater('capsule in capsules')).count().then( (count) => {
           this.count = count;
         });
@@ -44,10 +55,11 @@ describe('MyApp', function() {
           return $('.editFormButton').click();
         })
         .then(function() {
+          browser.driver.sleep(2000);
           return element.all(by.repeater('capsule in capsules')).first().element(by.binding('capsule.description')).getText()
         })
         .then( function(text) {
-          // expect(text).toEqual('My test capsule+edit');
+          expect(text).toEqual('My test capsule+edit');
           done();
         });
 
@@ -60,9 +72,9 @@ describe('MyApp', function() {
 
     describe('clothing items', function() {
 
-      beforeAll( function(done) {
-        browser.pause();
+      beforeAll( function() {
         element.all(by.repeater('capsule in capsules')).first().element(by.binding('capsule.description')).click();
+        browser.driver.sleep(2000);
         element.all(by.repeater('item in items')).count().then( count => {
           this.count = count;
         });
@@ -77,6 +89,8 @@ describe('MyApp', function() {
 
         $('.addButton').click();
 
+        browser.driver.sleep(3000);
+
         var items = element.all(by.repeater('item in items'));
 
         expect(items.count()).toEqual(this.count + 1);
@@ -87,6 +101,7 @@ describe('MyApp', function() {
       it('should delete an item', function() {
         var items = element.all(by.repeater('item in items'));
         items.last().$('.deleteButton').click();
+        browser.driver.sleep(1000);
         var updatedItems = element.all(by.repeater('item in items'));
         expect(updatedItems.count()).toEqual(this.count);
       });
@@ -97,7 +112,7 @@ describe('MyApp', function() {
   describe('deleting the capsule', function() {
 
     beforeAll( function() {
-      browser.get('/');
+      browser.get('/#/capsules');
     });
 
     it('should delete a capsule', function() {

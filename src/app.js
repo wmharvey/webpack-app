@@ -15,14 +15,38 @@ app.config(['welcomeMessageProvider', function(welcome) {
 	welcome.setWelcome('message', 'Welcome to the site!');
 }]);
 
+app.config( function(jwtInterceptorProvider, $httpProvider) {
+
+  jwtInterceptorProvider.tokenGetter = function(store) {
+    return store.get('jwt');
+  };
+
+  $httpProvider.interceptors.push('jwtInterceptor');
+});
+
 app.config( function($stateProvider, $urlRouterProvider) {
 
-	$urlRouterProvider.otherwise('/overview');
+	$urlRouterProvider.otherwise('/home');
 
 	$stateProvider
+		.state( 'home', {
+			url: '/home',
+			template: `<home />`
+		})
+		.state( 'login', {
+			url: '/login',
+			template: `<login />`
+		})
+		.state( 'signup', {
+			url: '/signup',
+			template: `<signup />`
+		})
 		.state( 'overview', {
 			url: '/capsules',
 			template: `<overview capsules="capsules"/>`,
+			data: {
+			  requiresLogin: true
+			},
 			resolve: {
 				capsules ( CapsuleService ) {
 					return CapsuleService.query().$promise;
@@ -35,6 +59,9 @@ app.config( function($stateProvider, $urlRouterProvider) {
 		.state( 'details', {
 			url: '/capsules/:id',
 			template: `<detail items="items" capsule="capsule"/>`,
+			data: {
+			  requiresLogin: true
+			},
 			resolve: {
 				capsule ( CapsuleService, $stateParams ) {
 					return CapsuleService.get({id: $stateParams.id}).$promise;
@@ -53,26 +80,32 @@ app.config( function($stateProvider, $urlRouterProvider) {
 			}
 		})
 		.state( 'profile', {
-			abstract: true,
 			url: '/profile',
-			template: `<div ui-view="profile"></div>
-								 <div ui-view="stats"></div>`
-		})
-	  .state('profile.parts', {
-	    views: {
-	      'profile': {
-	      	template: `<div>Profile View</div>`
-	      },
-	      'stats': {
-	      	template: `<div>Stats View</div>`
-	      }
-	    }
-	  });
+			views: {
+				'': { template:
+											`<div>Hello</div><div ui-view="profile"></div>
+								 			<div ui-view="stats"></div>`
+						},
+				'profile@profile': { template: `<div>Profile View</div>` },
+				'stats@profile': { template: `<div>Stats View</div>`}
+			},
+			data: {
+			  requiresLogin: true
+			}
+		});
 });
 
-app.run(['$state', function ($state) {
-	$state.transitionTo('overview');
-}]);
+app.run(function($rootScope, $state, store, jwtHelper) {
+  $rootScope.$on('$stateChangeStart', function(e, to) {
+    if (to.data && to.data.requiresLogin) {
+      if (!store.get('jwt') || jwtHelper.isTokenExpired(store.get('jwt'))) {
+        e.preventDefault();
+        console.log('rerouting to login');
+        $state.go('login');
+      }
+    }
+  });
+});
 
 document.body.innerHTML = template;
 

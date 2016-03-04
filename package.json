@@ -44,13 +44,12 @@
   },
   "dependencies": {
     "angular": "^1.5.0",
+    "angular-jwt": "0.0.9",
     "angular-messages": "^1.5.0",
     "angular-resource": "^1.5.0",
-    "angular-sanitize": "^1.5.0",
+    "angular-storage": "0.0.13",
     "angular-ui-router": "^0.2.18",
     "bootstrap": "^3.3.6",
-    "isotope-fit-columns": "^1.1.2",
-    "isotope-layout": "^2.2.2",
     "jquery": "^2.2.0",
     "moment": "^2.11.2",
     "ng-dialog": "^0.5.8"

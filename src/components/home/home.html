@@ -1,0 +1,13 @@
+<div class="home">
+  <div class="jumbotron centered">
+    <h1>Welcome to the temp welcome page!</h1>
+    <p ng-if="!profile"><a class="btn btn-primary btn-lg" role="button" ui-sref="login">Login</a></p>
+    <p ng-if="!profile"><a class="btn btn-primary btn-lg" role="button" ui-sref="signup">Signup</a></p>
+    <p ng-if="profile"><a class="btn btn-primary btn-lg" role="button" ng-click="logout()">Logout</a></p>
+  </div>
+
+  <div ng-if="profile">
+    <p>You are logged in as {{profile.username}}</p>
+    <p>Your token expires in {{profile.exp}} seconds</p>
+  </div>
+</div>
